@@ -32,7 +32,7 @@ def find_folder(service, folder_name, parent_id=None):
         query += f" and '{parent_id}' in parents"
     results = service.files().list(q=query, fields="files(id, name)").execute()
     folders = results.get('files', [])
-    return folders  # lista folderów spełniających kryteria
+    return folders
 
 def create_folder(service, name, parent_id=None):
     metadata = {
@@ -61,7 +61,7 @@ def upload_folder(service, folder_path, parent_id=None):
     for item in os.listdir(folder_path):
         item_path = os.path.join(folder_path, item)
         if os.path.isdir(item_path):
-            upload_folder(service, item_path, folder_id)  # rekurencja dla podfolderów
+            upload_folder(service, item_path, folder_id)
 
         else:
             upload_file(service, item_path, folder_id)
